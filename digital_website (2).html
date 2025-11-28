@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Digital Multi-Tool — Explore · Learn · Play</title>
+  <style>
+    :root{--bg:#0b1220;--card:#0f1724;--muted:#9aa4b2;--accent:#4f46e5;--danger:#ef4444}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:linear-gradient(180deg,#031025 0%, #071330 100%);color:#e6eef8}
+    header{padding:28px 20px;border-bottom:1px solid rgba(255,255,255,0.03);display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:700}
+    nav{display:flex;gap:12px}
+    nav button{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);padding:8px 12px;border-radius:8px;cursor:pointer}
+    .hero{padding:48px 20px;text-align:center}
+    .hero h1{font-size:2rem;margin:0 0 8px}
+    .hero p{color:var(--muted);margin:0 0 18px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;padding:18px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border:1px solid rgba(255,255,255,0.03);padding:18px;border-radius:14px;min-height:120px}
+    h2{margin:0 0 10px;font-size:1.1rem}
+    .muted{color:var(--muted);font-size:0.95rem}
+
+    /* calculators */
+    .calc-screen{width:100%;height:56px;font-size:1.25rem;padding:8px;border-radius:10px;border:none;background:rgba(255,255,255,0.03);color:inherit;text-align:right}
+    .calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+    .btn{padding:10px;border-radius:10px;border:none;background:var(--accent);color:white;cursor:pointer}
+    .btn.secondary{background:rgba(255,255,255,0.03);color:var(--muted)}
+    .row{display:flex;gap:10px}
+
+    /* lists */
+    .list{display:flex;flex-direction:column;gap:10px}
+    .place{display:flex;gap:12px;align-items:center}
+    .place img{width:72px;height:60px;border-radius:8px;object-fit:cover}
+
+    /* footer */
+    footer{padding:18px;text-align:center;color:var(--muted)}
+
+    /* responsive small tweaks */
+    @media (max-width:480px){.hero h1{font-size:1.4rem}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">DM</div>
+      <div>
+        <div style="font-weight:700">Digital Multi-Tool</div>
+        <div style="font-size:12px;color:var(--muted)">Explore · Learn · Play</div>
+      </div>
+    </div>
+    <nav>
+      <button onclick="scrollToSection('calculators')">Calculators</button>
+      <button onclick="scrollToSection('entertainment')">Entertainment</button>
+      <button onclick="scrollToSection('places')">Places</button>
+      <button onclick="scrollToSection('food')">Food</button>
+      <button onclick="scrollToSection('study')">Study</button>
+      <button onclick="scrollToSection('news')">Hot News</button>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Everything useful — in one beautiful place</h1>
+    <p class="muted">Calculators, travel ideas, trending news, recipes, study helpers and playful entertainment — built to surprise and help everyone.</p>
+  </section>
+
+  <main class="grid">
+    <!-- Calculators -->
+    <section id="calculators" class="card">
+      <h2>Calculators</h2>
+      <p class="muted">Multiple useful calculators — quick to use with buttons.</p>
+
+      <div style="margin-top:12px;display:grid;grid-template-columns:1fr;gap:12px">
+        <!-- Simple Calculator -->
+        <div class="card" style="padding:12px">
+          <strong>Simple Calculator</strong>
+          <input id="calcScreen" class="calc-screen" placeholder="0" disabled />
+          <div class="calc-grid">
+            <button class="btn secondary" onclick="press('7')">7</button>
+            <button class="btn secondary" onclick="press('8')">8</button>
+            <button class="btn secondary" onclick="press('9')">9</button>
+            <button class="btn secondary" onclick="press('/')">÷</button>
+
+            <button class="btn secondary" onclick="press('4')">4</button>
+            <button class="btn secondary" onclick="press('5')">5</button>
+            <button class="btn secondary" onclick="press('6')">6</button>
+            <button class="btn secondary" onclick="press('*')">×</button>
+
+            <button class="btn secondary" onclick="press('1')">1</button>
+            <button class="btn secondary" onclick="press('2')">2</button>
+            <button class="btn secondary" onclick="press('3')">3</button>
+            <button class="btn secondary" onclick="press('-')">−</button>
+
+            <button class="btn secondary" onclick="press('0')">0</button>
+            <button class="btn secondary" onclick="press('.')">.</button>
+            <button class="btn" onclick="calculate()">=</button>
+            <button class="btn secondary" onclick="press('+')">+</button>
+          </div>
+          <div style="margin-top:8px"><button class="btn" style="background:var(--danger)" onclick="clearCalc()">Clear</button></div>
+        </div>
+
+        <!-- BMI Calculator -->
+        <div class="card" style="padding:12px">
+          <strong>BMI Calculator</strong>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+            <input id="height" placeholder="height (cm)" />
+            <input id="weight" placeholder="weight (kg)" />
+            <button class="btn" onclick="calcBMI()">Calculate BMI</button>
+          </div>
+          <p id="bmiResult" class="muted"></p>
+        </div>
+
+        <!-- Loan Calculator -->
+        <div class="card" style="padding:12px">
+          <strong>Loan / Installment Calculator</strong>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+            <input id="loanAmount" placeholder="Amount" />
+            <input id="loanYears" placeholder="Years" />
+            <input id="loanRate" placeholder="Annual rate (%)" />
+            <button class="btn" onclick="calcLoan()">Compute</button>
+          </div>
+          <p id="loanResult" class="muted"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Entertainment -->
+    <section id="entertainment" class="card">
+      <h2>Entertainment</h2>
+      <p class="muted">Quick fun: jokes, memes, trivia and a tiny game.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+        <div style="flex:1;min-width:220px">
+          <strong>Random Joke</strong>
+          <p id="joke" class="muted">Press the button for a joke.</p>
+          <button class="btn" onclick="showJoke()">Tell me a joke</button>
+        </div>
+
+        <div style="flex:1;min-width:220px">
+          <strong>Quick Trivia</strong>
+          <p id="trivia" class="muted">Press for a random trivia question.</p>
+          <button class="btn" onclick="showTrivia()">Trivia</button>
+        </div>
+
+        <div style="flex:1;min-width:220px">
+          <strong>Mini Game — Guess Number</strong>
+          <p class="muted">Guess a number 1–50.</p>
+          <div class="row"><input id="guessInput" placeholder="your guess" /><button class="btn" onclick="guessNumber()">Guess</button></div>
+          <p id="guessResult" class="muted"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Places to visit -->
+    <section id="places" class="card">
+      <h2>Places to Visit</h2>
+      <p class="muted">Hand-picked travel ideas with short descriptions.</p>
+      <div class="list" style="margin-top:10px">
+        <div class="place"><img src="https://picsum.photos/seed/rwanda/200/140" alt="place1"><div><strong>Kigali Panorama</strong><div class="muted">City views, cultural museums and vibrant markets.</div></div></div>
+        <div class="place"><img src="https://picsum.photos/seed/beach/200/140" alt="place2"><div><strong>Pristine Beaches</strong><div class="muted">Sun, sand and relaxation spots — ideal for family trips.</div></div></div>
+        <div class="place"><img src="https://picsum.photos/seed/mountain/200/140" alt="place3"><div><strong>Mountain Trails</strong><div class="muted">Hiking routes and scenic viewpoints for adventurers.</div></div></div>
+      </div>
+    </section>
+
+    <!-- Food -->
+    <section id="food" class="card">
+      <h2>Food & Recipes</h2>
+      <p class="muted">Quick tasty recipes and local favourites.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+        <div style="flex:1;min-width:220px">
+          <strong>Recipe: Quick Stir-Fry</strong>
+          <div class="muted">Veg + protein + sauce — ready in 15 mins.</div>
+        </div>
+        <div style="flex:1;min-width:220px">
+          <strong>Local Dish</strong>
+          <div class="muted">Try a traditional dish — short description + tips.</div>
+        </div>
+        <div style="flex:1;min-width:220px">
+          <strong>Find Nearby</strong>
+          <div class="muted">Button below opens a map (placeholder).</div>
+          <button class="btn secondary" onclick="alert('Open map in production build')">Open map</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Study -->
+    <section id="study" class="card">
+      <h2>Study Hub</h2>
+      <p class="muted">Tools to help studying: focus timer, flashcards and quick notes.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+        <div style="flex:1;min-width:220px">
+          <strong>Focus Timer</strong>
+          <div class="row"><input id="minutes" placeholder="minutes" /><button class="btn" onclick="startTimer()">Start</button></div>
+          <p id="timerText" class="muted"></p>
+        </div>
+        <div style="flex:1;min-width:220px">
+          <strong>Flashcards</strong>
+          <div class="muted">Create a card set and flip — (demo)</div>
+          <button class="btn" onclick="demoFlashcard()">Show card</button>
+          <p id="cardText" class="muted"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hot News -->
+    <section id="news" class="card">
+      <h2>Hot News</h2>
+      <p class="muted">Load the latest headlines (requires a news API or RSS in production). Use the example button to fetch from a public RSS-to-JSON service if available.</p>
+      <div style="display:flex;gap:10px;flex-direction:column;margin-top:10px">
+        <button class="btn" onclick="loadNews()">Load Latest News</button>
+        <div id="newsList" class="list muted"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    Built for everyone — explore, learn and play. Want this converted to a multi-page app or a Vue/React project? I can do that next.
+  </footer>
+
+  <script>
+    /* Smooth scroll */
+    function scrollToSection(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
+
+    /* --- Simple calculator --- */
+    const calcScreen = document.getElementById('calcScreen');
+    function press(v){calcScreen.value = (calcScreen.value||'') + v}
+    function calculate(){try{calcScreen.value = Function('return '+calcScreen.value)()}catch(e){calcScreen.value='Error'}}
+    function clearCalc(){calcScreen.value=''}
+
+    /* --- BMI --- */
+    function calcBMI(){const h=Number(document.getElementById('height').value);const w=Number(document.getElementById('weight').value);if(!h||!w){document.getElementById('bmiResult').innerText='Enter height and weight';return}const bmi=(w/((h/100)**2)).toFixed(1);let cat='';if(bmi<18.5)cat='Underweight';else if(bmi<25)cat='Normal';else if(bmi<30)cat='Overweight';else cat='Obese';document.getElementById('bmiResult').innerText=`BMI ${bmi} — ${cat}`}
+
+    /* --- Loan calculator --- */
+    function calcLoan(){const P=Number(document.getElementById('loanAmount').value);const years=Number(document.getElementById('loanYears').value);const r=Number(document.getElementById('loanRate').value)/100/12;if(!P||!years||!r){document.getElementById('loanResult').innerText='Enter amount, years and rate';return}const n=years*12;const M=(P*r)/(1-Math.pow(1+r,-n));document.getElementById('loanResult').innerText=`Monthly: ${M.toFixed(2)}`}
+
+    /* --- Entertainment: jokes, trivia, guess game --- */
+    const jokes = [
+      "Why don't scientists trust atoms? Because they make up everything!",
+      "I told my computer I needed a break — it said 'No problem, I'll go to sleep.'",
+      "Why did the tomato blush? Because it saw the salad dressing."
+    ];
+    function showJoke(){document.getElementById('joke').innerText=jokes[Math.floor(Math.random()*jokes.length)]}
+
+    const triviaList = [
+      'Honey never spoils — archaeologists found edible honey thousands of years old.',
+      'Bananas are berries, but strawberries are not.',
+      'The Eiffel Tower can be 15 cm taller during summer.'
+    ];
+    function showTrivia(){document.getElementById('trivia').innerText=triviaList[Math.floor(Math.random()*triviaList.length)]}
+
+    let secret = Math.floor(Math.random()*50)+1;
+    function guessNumber(){const g=Number(document.getElementById('guessInput').value);if(!g){document.getElementById('guessResult').innerText='Enter a number';return}if(g===secret)document.getElementById('guessResult').innerText='Correct! You win 🎉 (new number generated)';secret=Math.floor(Math.random()*50)+1;else document.getElementById('guessResult').innerText=g>secret?'Too high':'Too low'}
+
+    /* --- Study tools --- */
+    let timerId=null;
+    function startTimer(){const m=Number(document.getElementById('minutes').value);if(!m){document.getElementById('timerText').innerText='Enter minutes';return}let s=m*60;clearInterval(timerId);document.getElementById('timerText').innerText=`Time left: ${m}:00`;timerId=setInterval(()=>{s--;const mm=Math.floor(s/60);const ss=s%60;document.getElementById('timerText').innerText=`Time left: ${mm}:${ss.toString().padStart(2,'0')}`;if(s<=0){clearInterval(timerId);document.getElementById('timerText').innerText='Done! Take a break 🎉'}},1000)}
+
+    function demoFlashcard(){document.getElementById('cardText').innerText='Q: What is the capital of France? — A: Paris'}
+
+    /* --- Hot News (placeholder) --- */
+    async function loadNews(){const list=document.getElementById('newsList');list.innerHTML='Loading...';
+      try{
+        // In production: replace URL with a real RSS-to-JSON or News API endpoint + API key.
+        const proxy = 'https://api.allorigins.win/raw?url=';
+        const rss = 'https://feeds.bbci.co.uk/news/world/rss.xml';
+        const res = await fetch(proxy + encodeURIComponent(rss));
+        if(!res.ok){list.innerHTML='Unable to fetch from proxy.';return}
+        const text = await res.text();
+        // Simple parse: extract titles (best-effort). This is a lightweight demo — for production use an RSS parser on server.
+        const titles = Array.from(text.matchAll(/<title>(.*?)<\/title>/gi)).slice(1,6).map(m=>m[1]);
+        list.innerHTML='';titles.forEach(t=>{const el=document.createElement('div');el.innerText=t;el.className='muted';list.appendChild(el)});
+      }catch(e){list.innerHTML='Failed to load news — see console for details';console.error(e)}
+    }
+
+    /* small accessibility: allow Enter to submit simple guess and timers */
+    document.addEventListener('keydown', (e)=>{if(e.key==='Enter'){if(document.activeElement===document.getElementById('guessInput'))guessNumber()}})
+
+    // Nice: lazy-load images to reduce initial weight
+    document.querySelectorAll('img').forEach(img=>img.loading='lazy');
+  </script>
+</body>
+</html>
